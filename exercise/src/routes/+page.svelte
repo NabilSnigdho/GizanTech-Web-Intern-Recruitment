@@ -14,19 +14,12 @@
 	let filterBy: 'none' | (typeof filterOptions)[number]['name'] = 'none';
 	let filterValue = 'any';
 	let filterValues: string[] = [];
-	$: if (filterBy === 'name') {
-		filterValue = '';
-	} else if (filterBy !== 'none') {
-		filterValue = 'any';
-		fetch(`/api/${filterBy}List`).then(async (res) => {
-			filterValues = await res.json();
-		});
+	$: if (filterBy !== 'none' && filterBy !== 'name') {
+		filterValues = data[`${filterBy}List`];
 	}
 
-	let exercises: Exercise[];
-	$: if (filterBy === 'none' || filterValue === 'any' || filterValue === '') {
-		exercises = data.exerciseList;
-	} else {
+	let exercises: Exercise[] = [];
+	$: if (!(filterBy === 'none' || filterValue === 'any' || filterValue === '')) {
 		fetch(`/api/${filterBy}/${filterValue}`).then(async (res) => {
 			exercises = await res.json();
 		});
@@ -43,7 +36,12 @@
 <div class="row g-3 mb-3">
 	<div class="col-md-6">
 		<label for="filter-by" class="form-label">Filter by</label>
-		<select class="form-select" bind:value={filterBy} id="filter-by">
+		<select
+			class="form-select"
+			bind:value={filterBy}
+			id="filter-by"
+			on:change={() => (filterValue = filterBy === 'name' ? '' : 'any')}
+		>
 			<option value="none" selected>None</option>
 			{#each filterOptions as item}
 				<option value={item.name}>{item.label}</option>
@@ -70,7 +68,7 @@
 </div>
 
 <div class="d-grid gap-2" style="grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));">
-	{#each exercises as exercise}
+	{#each filterBy === 'none' || filterValue === 'any' || filterValue === '' ? data.exerciseList : exercises as exercise}
 		<div class="card">
 			<img src={exercise.gifUrl} class="card-img-top" loading="lazy" alt="..." />
 			<div class="card-body">
