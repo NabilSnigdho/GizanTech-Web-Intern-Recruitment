@@ -1,0 +1,14 @@
+import { cert, initializeApp } from 'firebase-admin/app';
+import { getFirestore } from 'firebase-admin/firestore';
+
+const serviceAccount = {
+	projectId: 'exercisedb-bc7e0',
+	privateKey:
+		'-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCKoblDT7ZTnFpi\nYt6V+vfY3Id7cLX7HDDEgFGvc3RY3XOzQeBTM+8iig0STZ7WUCOza5tXWNA6fB1w\nAf1wf0CPyXdOdUnVw27toe80SxT4Q0u+WCplcQkXadRhHAoFX89LF/H+6sfUmN0Z\nrA0/ce8eHVj1DyBtmYSvHwq0Jz7NMXaYRh2B+EQHpXBQ6K7Es9ts2d2Gm1k48tpm\nnIFYWk+ibUQJZ9q6AaWtsJG1076fSBikIPkEg0kEd+BR8tV6g/BNcAjH7WfrsZcW\nMrirSaH9jzgvTmSxm9+3KDlDU0DWHB5k9Fz3pjEztSKLmniLX4Vk0hxUWix0wkfN\nYIPhyWWnAgMBAAECggEADI93kM+IQPi8awfzNoUybzMX5rQWa5B+eKdO/1sHZ8Uf\nZlaUeRAOXW5C80LAyUEh4u/fzLZZc3BrCGAdyCi3aZpYKsMks+9M6HnmCYe4otUS\nEpu8B6HfWtWLWQW91gZ8FR0vyf1tVT1JDGToHwn3H3Q1lZ/Pu9kPdQBr1gPCRGan\nPfLkOwq67vNceEHvVvWmgv+XNZThZhknKCpFABIIXbzIz8ibj9JUUZkqlsRP3HDc\nWcPaPpGnUAqqhiVuOvbhUp8ftIu2S5A20RXppRqYOC0KC+2ed0fN/kUTq7DmyX/K\nmNOytWApsQcxYk9PSpRDfISXBxO81UVmfKcLQVLYcQKBgQC/Bm224ZWACADnj9S7\nGXFoyd8RWcKNYcfQxb39dZ+MrrfNrBXAvTrWBM105+LdVMF/P4ApC0KP96gczeo8\ntjYtMHrtEm5TpNofCMCmxzCxWmB+xkWohvWGwki7/ZEB/ZTJBT3GszZQvKcKttc3\ngUV1LFmIMoBXrsFzI8Nip+5Q0QKBgQC5ySARsi+mCphdg3kZSjnl8bFuY5UlIROa\nB7R3H7KWS+QHpX73tx/c65HfJeV/8dFRA8IPQMob1CeCz4jDhKu8pzltyEadX19u\noGM6nGHjY9Skxlaz813l5eq1ZQFzXLfRSKYzzr45rDnbYPze52LQePcfITUG6B/l\nqyLDfv2s9wKBgG9ckg1xiTQwdkaIhR3mAUVzmkWFLHQ7sr806EOglLjxClounifU\nqT4nYpdqr8kUJhHGtTI4TD+dwzW3nXxzRTYm8yLOAd9lVXuOILGZoftikqqVb/qF\nYxGCpeBiPG0Kpfhiw9bYlyuOL1uBqAnFpPZgOnm55zQ2vrQe/0K+X6JhAoGAPOf3\nsHV283szuix4zdaspnqWzXauFW8DixKNkiP9GxKkHfGebz1En9tGhh5ZX5l6IpIV\n04RM/dSOY28ACgD7gCxeQmRO6hazJYRFI5jS6oX211ICaJoXJWA7kt4bHKO/y0eC\n3Scg661PhmEEZVr75RZTBYyQYsREeLmi+u4t4b8CgYEAqyJF+sCdDN0qcpr7Swn2\nzSgsN3cc5ojgpsXA1w6Mi0JuA4mm9caNy/LCpsehAP9l3eNSV+N48Og7LmSf6QP8\nviqxjnmkEF2XjlOPw9D4vHKsaVaSZ3ZGd39KLdtfslXi4bVLSVO4CVDW2GbcKibQ\nUGnKyDYdFNXRYiuzy03VTFY=\n-----END PRIVATE KEY-----\n',
+	clientEmail: 'firebase-adminsdk-hpwxc@exercisedb-bc7e0.iam.gserviceaccount.com'
+};
+
+export const adminApp = initializeApp({
+	credential: cert(serviceAccount)
+});
+export const adminFirestore = getFirestore(adminApp);
