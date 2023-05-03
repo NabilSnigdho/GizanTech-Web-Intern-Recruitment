@@ -1,6 +1,7 @@
 ## Instruction
-1. Fork this repository to your GitHub account and start the development.
-2. Submit your repository link here: 
+1. Create a private repository to your GitHub account and start the development.
+2. Add the following email address as a colaborator. "<b>admin@gizantech.com</b>"
+3. Submit your repository link here: 
 ([Google Form: Submission Link](https://forms.gle/w6N39GNHndENuvYH8))
 
 **Please use a separate branch for each of the below task.**
