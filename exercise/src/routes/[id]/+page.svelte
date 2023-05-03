@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
@@ -10,6 +11,10 @@
 </svelte:head>
 
 <h1>{data.exercise.name}</h1>
+
+<form method="POST" action="?/delete" use:enhance>
+	<button class="btn btn-danger" type="submit">Delete</button>
+</form>
 
 <div class="row g-3 mb-3">
 	<div class="col-md-6">

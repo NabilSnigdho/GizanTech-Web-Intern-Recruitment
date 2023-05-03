@@ -1,5 +1,6 @@
 import type { Exercise } from '$lib/data/schema';
-import { error } from '@sveltejs/kit';
+import * as db from '$lib/server/database.js';
+import { error, fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ params, fetch }) => {
@@ -12,3 +13,16 @@ export const load = (async ({ params, fetch }) => {
 
 	return { exercise };
 }) satisfies PageServerLoad;
+
+export const actions = {
+	delete: async ({ params }) => {
+		try {
+			db.deleteExercise(params.id);
+		} catch {
+			return fail(422, {
+				error: 'An error occurred!'
+			});
+		}
+		throw redirect(303, '/');
+	}
+};

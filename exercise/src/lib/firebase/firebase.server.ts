@@ -1,4 +1,4 @@
-import { cert, initializeApp } from 'firebase-admin/app';
+import { cert, getApp, getApps, initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 
 const serviceAccount = {
@@ -8,7 +8,9 @@ const serviceAccount = {
 	clientEmail: 'firebase-adminsdk-hpwxc@exercisedb-bc7e0.iam.gserviceaccount.com'
 };
 
-export const adminApp = initializeApp({
-	credential: cert(serviceAccount)
-});
+export const adminApp = !getApps().length
+	? initializeApp({
+			credential: cert(serviceAccount)
+	  })
+	: getApp();
 export const adminFirestore = getFirestore(adminApp);

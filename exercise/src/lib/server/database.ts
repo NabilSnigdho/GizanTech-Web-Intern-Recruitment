@@ -10,6 +10,7 @@ import {
 	type DocumentData,
 	where
 } from 'firebase/firestore';
+import { adminFirestore } from '$lib/firebase/firebase.server';
 
 const { db } = initFirebase();
 
@@ -58,4 +59,19 @@ export function exerciseListByEquipment(value: string) {
 
 export function exerciseListByName(value: string) {
 	return getDocs(filter('name', value)).then(unwrap);
+}
+
+export function createExercise(exercise: Omit<Exercise, 'id'>) {
+	const documentRef = adminFirestore.collection('exercises').doc();
+	return documentRef.create({ id: documentRef.id, ...exercise });
+}
+
+export function updateExercise(id: string, exercise: Omit<Exercise, 'id'>) {
+	const documentRef = adminFirestore.collection('exercises').doc(id);
+	return documentRef.update(exercise);
+}
+
+export function deleteExercise(id: string) {
+	const documentRef = adminFirestore.collection('exercises').doc(id);
+	return documentRef.delete();
 }

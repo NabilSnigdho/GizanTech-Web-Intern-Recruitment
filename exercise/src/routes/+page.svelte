@@ -75,6 +75,7 @@
 				<div class="h5 card-title">{exercise.name}</div>
 				<p class="card-text">
 					<a href={`/${exercise.id}`} class="card-link">View</a>
+					<a href={`/${exercise.id}/update`} class="card-link">Update</a>
 				</p>
 			</div>
 			<ul class="list-group list-group-flush">
