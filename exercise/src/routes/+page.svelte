@@ -19,7 +19,9 @@
 	}
 
 	let exercises: Exercise[] = [];
-	$: if (!(filterBy === 'none' || filterValue === 'any' || filterValue === '')) {
+	$: if (filterBy === 'none' || filterValue === 'any' || filterValue === '') {
+		exercises = data.exerciseList
+	} else {
 		fetch(`/api/${filterBy}/${filterValue}`).then(async (res) => {
 			exercises = await res.json();
 		});
@@ -68,13 +70,14 @@
 </div>
 
 <div class="d-grid gap-2" style="grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));">
-	{#each filterBy === 'none' || filterValue === 'any' || filterValue === '' ? data.exerciseList : exercises as exercise}
+	{#each exercises as exercise}
 		<div class="card">
 			<img src={exercise.gifUrl} class="card-img-top" loading="lazy" alt="..." />
 			<div class="card-body">
 				<div class="h5 card-title">{exercise.name}</div>
 				<p class="card-text">
 					<a href={`/${exercise.id}`} class="card-link">View</a>
+					<a href={`/${exercise.id}/update`} class="card-link">Update</a>
 				</p>
 			</div>
 			<ul class="list-group list-group-flush">
