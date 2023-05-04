@@ -1,5 +1,8 @@
 <script lang="ts">
 	import type { Exercise } from '$lib/data/schema';
+	import type { DecodedIdToken } from 'firebase-admin/auth';
+	import { getContext } from 'svelte';
+	import type { Readable } from 'svelte/store';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -20,12 +23,14 @@
 
 	let exercises: Exercise[] = [];
 	$: if (filterBy === 'none' || filterValue === 'any' || filterValue === '') {
-		exercises = data.exerciseList
+		exercises = data.exerciseList;
 	} else {
 		fetch(`/api/${filterBy}/${filterValue}`).then(async (res) => {
 			exercises = await res.json();
 		});
 	}
+
+	const auth = getContext<Readable<DecodedIdToken | null>>('auth');
 </script>
 
 <svelte:head>
@@ -34,6 +39,10 @@
 </svelte:head>
 
 <h1>Exercises</h1>
+
+{#if !!$auth}
+	<div class="mb-3"><a class="btn btn-primary" href="add">Add New</a></div>
+{/if}
 
 <div class="row g-3 mb-3">
 	<div class="col-md-6">
@@ -77,7 +86,9 @@
 				<div class="h5 card-title">{exercise.name}</div>
 				<p class="card-text">
 					<a href={`/${exercise.id}`} class="card-link">View</a>
-					<a href={`/${exercise.id}/update`} class="card-link">Update</a>
+					{#if !!$auth}
+						<a href={`/${exercise.id}/update`} class="card-link">Update</a>
+					{/if}
 				</p>
 			</div>
 			<ul class="list-group list-group-flush">

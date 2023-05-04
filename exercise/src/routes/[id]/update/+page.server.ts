@@ -5,7 +5,10 @@ import type { Exercise } from '$lib/data/schema';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
-export const load = (async ({ params, fetch }) => {
+export const load = (async ({ params, fetch, locals }) => {
+	if (!locals.user) {
+		throw redirect(303, '/login');
+	}
 	const res = await fetch(`/api/${params.id}`);
 	if (res.status === 404)
 		throw error(404, {
@@ -25,7 +28,12 @@ const formSchema = object({
 });
 
 export const actions = {
-	default: async ({ params, request }) => {
+	default: async ({ params, request, locals }) => {
+		if (!locals.user) {
+			return fail(401, {
+				error: 'Permission denied.'
+			});
+		}
 		try {
 			const data = await request.formData();
 			await db.updateExercise(
@@ -39,7 +47,6 @@ export const actions = {
 				})
 			);
 		} catch (err) {
-			console.log(err)
 			return fail(422, {
 				error: 'An error occurred!'
 			});

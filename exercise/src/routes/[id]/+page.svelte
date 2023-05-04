@@ -1,8 +1,12 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import type { DecodedIdToken } from 'firebase-admin/auth';
+	import { getContext } from 'svelte';
+	import type { Readable } from 'svelte/store';
 	import type { PageServerData } from './$types';
 
 	export let data: PageServerData;
+	const auth = getContext<Readable<DecodedIdToken | null>>('auth');
 </script>
 
 <svelte:head>
@@ -12,9 +16,11 @@
 
 <h1>{data.exercise.name}</h1>
 
-<form method="POST" action="?/delete" use:enhance>
-	<button class="btn btn-danger" type="submit">Delete</button>
-</form>
+{#if !!$auth}
+	<form method="POST" action="?/delete" use:enhance>
+		<button class="btn btn-danger" type="submit">Delete</button>
+	</form>
+{/if}
 
 <div class="row g-3 mb-3">
 	<div class="col-md-6">

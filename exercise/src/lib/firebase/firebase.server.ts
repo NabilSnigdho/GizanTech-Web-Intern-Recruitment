@@ -1,5 +1,6 @@
 import { cert, getApp, getApps, initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
+import { getAuth } from 'firebase-admin/auth';
 
 const serviceAccount = {
 	projectId: 'temp-12baf',
@@ -14,3 +15,16 @@ export const adminApp = !getApps().length
 	  })
 	: getApp();
 export const adminFirestore = getFirestore(adminApp);
+export const adminAuth = getAuth(adminApp);
+
+export async function decodeToken(token: string) {
+	if (!token) {
+		return null;
+	}
+	try {
+		return await adminAuth.verifyIdToken(token);
+	} catch (err) {
+		console.error('An error occurred validating token', (err as Error).message);
+		return null;
+	}
+}

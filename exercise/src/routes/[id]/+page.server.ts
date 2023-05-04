@@ -15,7 +15,12 @@ export const load = (async ({ params, fetch }) => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-	delete: async ({ params }) => {
+	delete: async ({ params, locals }) => {
+		if (!locals.user) {
+			return fail(401, {
+				error: 'Permission denied.'
+			});
+		}
 		try {
 			await db.deleteExercise(params.id);
 		} catch {

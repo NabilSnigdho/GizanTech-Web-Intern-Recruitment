@@ -1,6 +1,13 @@
 import * as db from '$lib/server/database.js';
 import { fail, redirect } from '@sveltejs/kit';
 import { object, string } from 'yup';
+import type { PageServerLoad } from './$types';
+
+export const load = (async ({ locals }) => {
+	if (!locals.user) {
+		throw redirect(303, '/login');
+	}
+}) satisfies PageServerLoad;
 
 const formSchema = object({
 	name: string().required(),
@@ -11,7 +18,12 @@ const formSchema = object({
 });
 
 export const actions = {
-	default: async ({ request }) => {
+	default: async ({ request, locals }) => {
+		if (!locals.user) {
+			return fail(401, {
+				error: 'Permission denied.'
+			});
+		}
 		try {
 			const data = await request.formData();
 			await db.createExercise(
