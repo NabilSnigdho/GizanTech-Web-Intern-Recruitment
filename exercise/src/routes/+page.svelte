@@ -4,6 +4,7 @@
 	import { getContext } from 'svelte';
 	import type { Readable } from 'svelte/store';
 	import type { PageData } from './$types';
+	import { saveExcel, saveCSV, savePdf } from '$lib/helpers/export-data';
 
 	export let data: PageData;
 
@@ -40,9 +41,50 @@
 
 <h1>Exercises</h1>
 
-{#if !!$auth}
-	<div class="mb-3"><a class="btn btn-primary" href="add">Add New</a></div>
-{/if}
+<div class="mb-3 d-flex gap-3">
+	{#if !!$auth}
+		<a class="btn btn-primary" href="add">Add New</a>
+	{/if}
+	<div class="dropdown">
+		<button
+			class="btn btn-primary dropdown-toggle"
+			type="button"
+			data-bs-toggle="dropdown"
+			aria-expanded="false"
+		>
+			Download
+		</button>
+		<ul class="dropdown-menu">
+			<li>
+				<button
+					class="dropdown-item"
+					type="button"
+					on:click={() => {
+						saveCSV(exercises, 'exercises.csv');
+					}}>CSV</button
+				>
+			</li>
+			<li>
+				<button
+					class="dropdown-item"
+					type="button"
+					on:click={() => {
+						saveExcel(exercises, 'exercises.xlsx');
+					}}>Excel</button
+				>
+			</li>
+			<li>
+				<button
+					class="dropdown-item"
+					type="button"
+					on:click={() => {
+						savePdf(exercises, 'exercises.xlsx');
+					}}>PDF</button
+				>
+			</li>
+		</ul>
+	</div>
+</div>
 
 <div class="row g-3 mb-3">
 	<div class="col-md-6">
