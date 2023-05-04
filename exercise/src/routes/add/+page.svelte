@@ -24,7 +24,13 @@
 	</div>
 	<div class="mb-3">
 		<label for="exercise-gif-link" class="form-label">GIF link</label>
-		<input class="form-control" name="gifUrl" id="exercise-gif-link" value={placeholderImage} readonly />
+		<input
+			class="form-control"
+			name="gifUrl"
+			id="exercise-gif-link"
+			value={placeholderImage}
+			readonly
+		/>
 	</div>
 
 	<button type="submit" class="btn btn-primary">Submit</button>

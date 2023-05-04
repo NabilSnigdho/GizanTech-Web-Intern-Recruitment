@@ -20,7 +20,7 @@
 
 	let exercises: Exercise[] = [];
 	$: if (filterBy === 'none' || filterValue === 'any' || filterValue === '') {
-		exercises = data.exerciseList
+		exercises = data.exerciseList;
 	} else {
 		fetch(`/api/${filterBy}/${filterValue}`).then(async (res) => {
 			exercises = await res.json();

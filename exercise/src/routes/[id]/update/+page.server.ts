@@ -39,7 +39,6 @@ export const actions = {
 				})
 			);
 		} catch (err) {
-			console.log(err)
 			return fail(422, {
 				error: 'An error occurred!'
 			});
