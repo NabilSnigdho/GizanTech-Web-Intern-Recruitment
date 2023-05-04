@@ -7,6 +7,12 @@ export const handle = (async ({ event, resolve }) => {
 		const decodedToken = await decodeToken(token);
 		if (decodedToken) {
 			event.locals.user = decodedToken;
+		} else {
+			event.cookies.delete('auth_token', {
+				path: '/',
+				httpOnly: true,
+				maxAge: -1
+			});
 		}
 	}
 
