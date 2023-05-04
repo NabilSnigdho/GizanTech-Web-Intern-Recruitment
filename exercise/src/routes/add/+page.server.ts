@@ -14,7 +14,7 @@ export const actions = {
 	default: async ({ request }) => {
 		try {
 			const data = await request.formData();
-			db.createExercise(
+			await db.createExercise(
 				formSchema.validateSync({
 					name: data.get('name'),
 					bodyPart: data.get('bodyPart'),

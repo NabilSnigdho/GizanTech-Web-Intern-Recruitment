@@ -17,7 +17,7 @@ export const load = (async ({ params, fetch }) => {
 export const actions = {
 	delete: async ({ params }) => {
 		try {
-			db.deleteExercise(params.id);
+			await db.deleteExercise(params.id);
 		} catch {
 			return fail(422, {
 				error: 'An error occurred!'
