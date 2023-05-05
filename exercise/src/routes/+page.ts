@@ -2,10 +2,14 @@ import type { Exercise } from '$lib/data/schema';
 import type { PageLoad } from './$types';
 
 export const load = (async ({ fetch, depends }) => {
-	const exerciseList = (await (await fetch(`/api`)).json()) as Exercise[];
-	const bodyPartList = (await (await fetch('/api/bodyPartList')).json()) as string[];
-	const targetList = (await (await fetch('/api/targetList')).json()) as string[];
-	const equipmentList = (await (await fetch('/api/equipmentList')).json()) as string[];
+	const [exerciseList, bodyPartList, targetList, equipmentList] = (await Promise.all(
+		[
+			fetch(`/api`),
+			fetch('/api/bodyPartList'),
+			fetch('/api/targetList'),
+			fetch('/api/equipmentList')
+		].map((item) => item.then((res) => res.json()))
+	)) as [Exercise[], string[], string[], string[]];
 
 	depends('app:exercises');
 
