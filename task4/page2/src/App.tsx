@@ -262,6 +262,34 @@ function App() {
 							</div>
 						</div>
 					</div>
+					<div className="grid gap-5 lg:grid-cols-2">
+						<div className="p-5 bg-white">
+							<h1 className="text-lg font-bold mb-0">Latest Posts</h1>
+							<Avatar img="/person.jpg" rounded={true} className="py-3">
+								<div className="font-bold mb-1">James Anderson</div>
+								<div>
+									Lorem Ipsum is simply dummy text of the printing and type
+									setting industry.
+								</div>
+								<div className="flex items-center text-white gap-2 my-2">
+									<button className="px-2 py-1 bg-sky-500">Edit</button>
+									<button className="px-2 py-1 bg-emerald-500">Publish</button>
+									<button className="px-2 py-1 bg-red-500">Delete</button>
+								</div>
+							</Avatar>
+						</div>
+						<div className="p-5 bg-white">
+							<h1 className="text-lg font-bold mb-0">Chat Option</h1>
+							<Avatar img="/person.jpg" rounded={true} className="py-3">
+								<div className="font-bold mb-2">James Anderson</div>
+								<div className="p-2 bg-gray-100 mb-1">
+									Lorem Ipsum is simply dummy text of the printing and type
+									setting industry.
+								</div>
+								<small>10:56 am</small>
+							</Avatar>
+						</div>
+					</div>
 				</main>
 			</div>
 		</div>
